@@ -5,6 +5,7 @@ import symbols.Type;
 
 public class Temp extends Expr {
 
+    // 全局变量
     static int count = 0;
     int number = 0;
 

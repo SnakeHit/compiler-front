@@ -6,7 +6,7 @@ import lexer.Lexer;
  * 语义结点基类
  * */
 public class Node {
-
+    // 保存了本结点对应的构造在源程序中的行号
     int lexline = 0;
 
     Node() {
@@ -17,6 +17,7 @@ public class Node {
         throw new Error("near line " + lexline + ": " + s);
     }
 
+    // 全局变量，保存当前已经生成了labels的数量
     static int labels = 0;
 
     /**

@@ -15,13 +15,13 @@ public class Else extends Stmt {
     }
 
     public void gen(int b, int a) {
-        int label1 = newlabel();   // label1 for stmt1
-        int label2 = newlabel();   // label2 for stmt2
-        expr.jumping(0, label2);    // fall through to stmt1 on true
-        emitlabel(label1);
-        stmt1.gen(label1, a);
-        emit("goto L" + a);
+        int label1 = newlabel();    // label1用于语句stmt1
+        int label2 = newlabel();    // label2用于语句stmt2
+        expr.jumping(0, label2); // 如果为真控制流穿越到stmt1，为假时跳转到label2
+        emitlabel(label1);         // label1的标号
+        stmt1.gen(label1, a);      // stmt1的中间代码
+        emit("goto L" + a);     // a标记当前语句的代码之后的第一条指令
         emitlabel(label2);
-        stmt2.gen(label2, a);
+        stmt2.gen(label2, a);      // stmt2的中间代码
     }
 }

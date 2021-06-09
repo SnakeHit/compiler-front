@@ -172,7 +172,11 @@ public class Parser {
         match(';');
         return stmt;
     }
-
+    // 文法为 bool-> join bool1
+    // bool1 -> || join bool1 | 空
+    // 消除了左递归
+    // a || b || c || e || f ||.....
+    // m && n
     Expr bool() throws IOException {
         Expr x = join();
         while (look.tag == Tag.OR) {
@@ -183,6 +187,9 @@ public class Parser {
         return x;
     }
 
+    // 文法为 join -> equality join1
+    // join1 -> && equality join1 | 空
+    // a && b && c && d && ....
     Expr join() throws IOException {
         Expr x = equality();
         while (look.tag == Tag.AND) {
@@ -193,6 +200,10 @@ public class Parser {
         return x;
     }
 
+    // 文法为 equality -> rel equality1
+    // equality1 -> == rel equality1 | != rel equality1 | 空
+    // a != b
+    // a == b
     Expr equality() throws IOException {
         Expr x = rel();
         while (look.tag == Tag.EQ || look.tag == Tag.NE) {
@@ -203,12 +214,13 @@ public class Parser {
         return x;
     }
 
+    // rel -> expr < expr | expr <= expr | expr >= expr | expr > expr | expr
     Expr rel() throws IOException {
         Expr x = expr();
         switch (look.tag) {
             case '<':
-            case Tag.LE:
-            case Tag.GE:
+            case Tag.LE: // <=
+            case Tag.GE: // >=
             case '>':
                 Token tok = look;
                 move();
@@ -218,6 +230,8 @@ public class Parser {
         }
     }
 
+    // expr -> term expr1
+    // expr1 -> + term expr1 | - term expr1 | 空
     Expr expr() throws IOException {
         Expr x = term();
         while (look.tag == '+' || look.tag == '-') {
@@ -228,6 +242,8 @@ public class Parser {
         return x;
     }
 
+    // term -> unary term1
+    // term1 -> *unary term1 | /unary term1 | 空
     Expr term() throws IOException {
         Expr x = unary();
         while (look.tag == '*' || look.tag == '/') {
@@ -238,6 +254,8 @@ public class Parser {
         return x;
     }
 
+    // unary -> !unary | -unary | factor
+    // 这里是单目运算符
     Expr unary() throws IOException {
         if (look.tag == '-') {
             move();
@@ -249,6 +267,7 @@ public class Parser {
         } else return factor();
     }
 
+    // factor -> (bool) | num | real | true | false | id
     Expr factor() throws IOException {
         Expr x = null;
         switch (look.tag) {

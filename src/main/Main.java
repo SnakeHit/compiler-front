@@ -8,7 +8,7 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream("src/tests/block1.t"));
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream("src/in.c"));
         System.setIn(in);
         File file = new File("src/outtest.txt");
         PrintStream out = new PrintStream(file);

@@ -7,7 +7,7 @@ import symbols.Type;
  * if (expr) stmt
  */
 public class If extends Stmt {
-
+    // 两个抽象语法树的结点
     Expr expr;
     Stmt stmt;
 
@@ -20,9 +20,9 @@ public class If extends Stmt {
     }
 
     public void gen(int b, int a) {
-        int label = newlabel(); // label for the code for stmt
-        expr.jumping(0, a);     // fall through on true, goto a on false
-        emitlabel(label);
-        stmt.gen(label, a);
+        int label = newlabel(); // stmt 的标号
+        expr.jumping(0, a);  // 如果为真，执行下一行, 如果为假，跳到a
+        emitlabel(label);      // 产生标号
+        stmt.gen(label, a);    // 这里是什么意思？
     }
 }

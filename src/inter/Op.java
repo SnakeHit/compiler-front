@@ -21,8 +21,11 @@ public class Op extends Expr {
      */
     @Override
     public Expr reduce() {
+        // 这里是多态使用，x一般是子类对象
+        // 规约为地址
         Expr x = gen();
         Temp t = new Temp(type);
+        // 调用子类的toString方法
         emit(t.toString() + " = " + x.toString());
         return t;
     }

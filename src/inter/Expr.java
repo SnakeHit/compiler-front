@@ -51,6 +51,7 @@ public class Expr extends Node {
      * @param f    表示false的标号
      */
     public void emitJumps(String test, int t, int f) {
+        // true和false都有标号
         if (t != 0 && f != 0) {
             // 生成如果if test goto L和 goto L
             emit("if " + test + " goto L" + t);
@@ -65,6 +66,7 @@ public class Expr extends Node {
         // nothing since both t and f fall through
     }
 
+    // 子类都重写了toString方法
     public String toString() {
         return op.toString();
     }

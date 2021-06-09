@@ -3,6 +3,9 @@ package inter;
 import lexer.Token;
 import symbols.Type;
 
+/**
+ * 这里处理的是单目运算符
+ */
 public class Unary extends Op {
 
     public Expr expr;

@@ -3,6 +3,10 @@ package symbols;
 import lexer.Tag;
 import lexer.Word;
 
+/**
+ * 我们把类Type定义为类Word的子类，这些是基本数据类型
+ * 将被词法分析器从词素映射为适合的对象
+ */
 public class Type extends Word {
 
     public int width = 0;          // width is used for storage allocation
