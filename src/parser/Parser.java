@@ -311,12 +311,12 @@ public class Parser {
         Expr t1, t2;
         Expr loc;  // inherit id
 
-        Type type = a.type;
+        Type type = a.type; // 数组的类型，int,float..
         match('[');
-        i = bool();
+        i = bool(); // id[expr]
         match(']');     // first index, I -> [ E ]
         type = ((Array) type).of;
-        w = new Constant(type.width);
+        w = new Constant(type.width); // 偏移量，比如int是4位，char是1位
         t1 = new Arith(new Token('*'), i, w);
         loc = t1;
         while (look.tag == '[') {      // multi-dimensional I -> [ E ] I
